@@ -8,17 +8,11 @@ import net.ripe.commons.ip.SortedResourceSet;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.bouncycastle.util.IPAddress;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 
 public final class CidrAggregator {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private CidrAggregator() {
 
@@ -32,7 +26,7 @@ public final class CidrAggregator {
      * @param hosts List of ips to be aggregated into CIDRs
      * @return aggregated CIDRs
      */
-    public static List<String> aggregateCIDRs(Set<String> hosts) {
+    public static List<String> aggregateCIDRs(List<String> hosts) {
         List<String> aggregatedCidrs = new ArrayList<String>();
         if (CollectionUtils.isEmpty(hosts)) {
             return aggregatedCidrs;

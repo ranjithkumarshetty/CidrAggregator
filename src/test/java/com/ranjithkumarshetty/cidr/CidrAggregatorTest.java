@@ -7,9 +7,7 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CidrAggregatorTest {
     @DataProvider
@@ -19,21 +17,34 @@ public class CidrAggregatorTest {
         List<String> hosts3 = Arrays.asList("0.0.whatif I write something here");
         List<String> hosts4 = Arrays.asList("167.1.173.32/24");
         List<String> hosts5 = Arrays.asList("abcd::efgh::ijkl::mnop");
-        List<String> hosts6 = Arrays.asList();
 
-        return new Object[][] {{hosts1}, {hosts2}, {hosts3}, {hosts4}, {hosts5}, {hosts6}};
+        return new Object[][] {{hosts1}, {hosts2}, {hosts3}, {hosts4}, {hosts5}};
     }
 
-    @Test(description = "If the hosts passed are invalid make sure CidrAggregator handles it appropriately", enabled = true,
-                    dataProvider = "invalidHosts")
+    @Test(description = "If the hosts passed are invalid make sure CidrAggregator handles it appropriately",
+                    enabled = true, dataProvider = "invalidHosts",
+                    expectedExceptions = {IllegalArgumentException.class})
     public void testCidrAggregationForInvalidHosts(List<String> hosts) {
-        validateCidrAggregation(hosts, Collections.emptyList());
-        Assert.assertTrue(CollectionUtils.isEqualCollection(CidrAggregator.aggregateCIDRs(null),
-                        Collections.emptyList()));
+        CidrAggregator.aggregateCIDRs(hosts);
     }
-    
+
+    @DataProvider
+    public Object[][] emptyHosts() {
+        List<String> hosts1 = Collections.emptyList();
+        List<String> hosts2 = null;
+
+        return new Object[][] {{hosts1}, {hosts2}};
+    }
+
+    @Test(description = "If no hosts are passed make sure CidrAggregator handles it appropriately", enabled = true,
+                    dataProvider = "emptyHosts")
+    public void testEmptyHosts(List<String> hosts) {
+        validateCidrAggregation(hosts, Collections.emptyList());
+    }
+
     @Test(description = "Test Cidr aggregation for ipv4 ip", enabled = true)
     public void testCidrAggregationForIpv4Ip() {
+
         validateCidrAggregation(Arrays.asList("123.123.123.123"), Arrays.asList("123.123.123.123/32"));
 
         validateCidrAggregation(Arrays.asList("123.123.123.123", "123.123.123.154"),
@@ -79,13 +90,11 @@ public class CidrAggregatorTest {
     @Test(description = "Test Cidr aggregation for valid ipv6 netmasks", enabled = true)
     public void testCidrAggregationForIpv6Netmask() {
         validateCidrAggregation(Arrays.asList("::/126", "::4/128"), Arrays.asList("::/126", "::4/128"));
-        Assert.assertEquals(CidrAggregator.aggregateCIDRs(new HashSet<String>(Arrays.asList("::/127", "::/128"))),
-                        Arrays.asList("::/127"));
+        Assert.assertEquals(CidrAggregator.aggregateCIDRs(Arrays.asList("::/127", "::/128")), Arrays.asList("::/127"));
         validateCidrAggregation(Arrays.asList("::/128", "::/128"), Arrays.asList("::/128"));
     }
 
-    private void validateCidrAggregation(List<String> inputHosts, List<String> expectedAggregation) {
-        Set<String> hosts = new HashSet<String>(inputHosts);
+    private void validateCidrAggregation(List<String> hosts, List<String> expectedAggregation) {
         Assert.assertTrue(CollectionUtils.isEqualCollection(CidrAggregator.aggregateCIDRs(hosts), expectedAggregation));
     }
 }
