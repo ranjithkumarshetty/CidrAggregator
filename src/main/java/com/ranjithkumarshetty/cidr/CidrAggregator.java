@@ -19,9 +19,8 @@ public final class CidrAggregator {
     }
 
     // Algorithm:
-    // 1. Ignore host if the host is one among the placeholder subnets
-    // 2. Depending on whether the host is a valid ipv4/ipv6 netmask or an ip add it to the resourceset
-    // 3. aggregate each of the resourceset into cidrs and return the result
+    // 1. Depending on whether the host is a valid ipv4/ipv6 netmask or an ip add it to the resourceset
+    // 2. aggregate each of the resourceset into cidrs and return the result
     /**
      * @param hosts List of ips to be aggregated into CIDRs
      * @return aggregated CIDRs
