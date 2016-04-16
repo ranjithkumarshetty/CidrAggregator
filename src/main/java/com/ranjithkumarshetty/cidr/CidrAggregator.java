@@ -41,20 +41,16 @@ public final class CidrAggregator {
         SortedResourceSet<Ipv4, Ipv4Range> ipv4ResourceSet = new SortedResourceSet<Ipv4, Ipv4Range>();
         SortedResourceSet<Ipv6, Ipv6Range> ipv6ResourceSet = new SortedResourceSet<Ipv6, Ipv6Range>();
         for (String host : hosts) {
-            try {
-                if (IPAddress.isValidIPv4WithNetmask(host)) {
-                    ipv4ResourceSet.add(Ipv4Range.parse(host));
-                } else if (IPAddress.isValidIPv4(host)) {
-                    ipv4ResourceSet.add(Ipv4.of(host));
-                } else if (IPAddress.isValidIPv6WithNetmask(host)) {
-                    ipv6ResourceSet.add(Ipv6Range.parse(host));
-                } else if (IPAddress.isValidIPv6(host)) {
-                    ipv6ResourceSet.add(Ipv6.of(host));
-                } else {
-                    LOGGER.warn("Ignoring host:{} since it is in invalid format", host);
-                }
-            } catch (IllegalArgumentException ex) {
-                LOGGER.warn("Ignoring host:{} since it is in invalid format", host);
+            if (IPAddress.isValidIPv4WithNetmask(host)) {
+                ipv4ResourceSet.add(Ipv4Range.parse(host));
+            } else if (IPAddress.isValidIPv4(host)) {
+                ipv4ResourceSet.add(Ipv4.of(host));
+            } else if (IPAddress.isValidIPv6WithNetmask(host)) {
+                ipv6ResourceSet.add(Ipv6Range.parse(host));
+            } else if (IPAddress.isValidIPv6(host)) {
+                ipv6ResourceSet.add(Ipv6.of(host));
+            } else {
+                throw new IllegalArgumentException(String.format("Host: %s is in invalid format, ignoring", host));
             }
         }
 
