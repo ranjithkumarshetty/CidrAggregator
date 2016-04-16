@@ -61,7 +61,6 @@ public final class CidrAggregator {
             }
         }
         return aggregatedCidrs;
-
     }
 
     private static List<String> createAggregatedCidrsFromIpv4Range(SortedResourceSet<Ipv4, Ipv4Range> ipv4ResourceSet) {
