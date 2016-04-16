@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.ranjithkumarshetty.cidr</groupId>
+	<artifactId>cidr-aggregator</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>CIDR Aggregator</name>
+	<description>Usage of commons-ip-math for CIDR aggregation</description>
+
+	<properties>
+		<bouncycastle_bcprov.version>1.54</bouncycastle_bcprov.version>
+		<commons_ip_math.version>1.23</commons_ip_math.version>
+		<common_collections.version>3.2.2</common_collections.version>
+		<org_slf4j.version>1.7.21</org_slf4j.version>
+		<org_testng.version>6.9.10</org_testng.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${common_collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+			<version>${bouncycastle_bcprov.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>net.ripe.commons</groupId>
+			<artifactId>commons-ip-math</artifactId>
+			<version>${commons_ip_math.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org_slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${org_testng.version}</version>
+		</dependency>
+	</dependencies>
+</project>
