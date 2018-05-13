@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +40,7 @@ public class CidrAggregatorTest {
     @Test(description = "If no hosts are passed make sure CidrAggregator handles it appropriately", enabled = true,
                     dataProvider = "emptyHosts")
     public void testEmptyHosts(List<String> hosts) {
-        validateCidrAggregation(hosts, Collections.emptyList());
+        validateCidrAggregation(hosts, new ArrayList<String>());
     }
 
     @Test(description = "Test Cidr aggregation for ipv4 ip", enabled = true)

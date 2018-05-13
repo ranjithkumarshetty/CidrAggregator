@@ -1,4 +1,6 @@
 .classpath
+.idea
+.idea/*
 .project
 .settings
 test-output
